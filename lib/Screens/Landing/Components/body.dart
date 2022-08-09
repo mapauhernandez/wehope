@@ -113,7 +113,7 @@ class _PrefBodyState extends State<LandingBody> {
               ],
             ),
             FutureBuilder<Calendar>(
-              future: fetchCalendars(http.Client()),
+              future: fetchCalendars(http.Client(), _locations),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   print(snapshot.error.toString());
@@ -121,7 +121,7 @@ class _PrefBodyState extends State<LandingBody> {
                     child:  Text(snapshot.error.toString()),
                   );
                 } else if (snapshot.hasData) {
-                  return EventList(calendar: snapshot.data!, locations: _locations);
+                  return EventList(calendar: snapshot.data!);
                 } else {
                   return const Center(
                     child: CircularProgressIndicator(),

@@ -11,10 +11,9 @@ import '../../Settings/settings_screen.dart';
 import '../../../components/calendar_event.dart';
 
 class EventList extends StatelessWidget {
-  EventList({super.key, required this.calendar, required this.locations});
+  EventList({super.key, required this.calendar});
 
   final Calendar calendar;
-  final List<String> locations;
 
   @override
   Widget build(BuildContext context) {

@@ -2,6 +2,8 @@
 import 'dart:collection';
 import 'dart:ffi';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'calendar_event.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -16,9 +18,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-Future<Calendar> fetchCalendars(http.Client client) async {
+Future<Calendar> fetchCalendars(http.Client client, List<String> locations) async {
   final response = await client
-      .get(Uri.parse('https://www.googleapis.com/calendar/v3/calendars/paredesfelipe402@gmail.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY'));
+      .get(Uri.parse('https://www.googleapis.com/calendar/v3/calendars/fdm09jjfsg4ll5lsbn4o24q6o8@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY'));
 
   // Use the compute function to run parsePhotos in a separate isolate.
   return compute(parseCalendars, response.body);

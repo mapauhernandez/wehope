@@ -17,28 +17,27 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _toggle_notifs = false;
   List<String> _loc_list = List.empty(growable: true);
+  List<String> _type_list = List.empty(growable: true);
   Map<String, bool> _toggles = new Map();
   bool _submitted = false;
 
-  List<String> northBayLocs = ["UN Plaza", "Golden Gate Park"];
-  List<String> southBayLocs = ["Stanford", "San Jose"];
-  List<String> eastBayLocs = ["Fremont", "Bleep", "Oakland"];
+  List<String> locs = ["South Bay", "East Bay", "Peninsula", "SF"];
+  List<String> types = ["Medical", "Beauty", "Hygiene"];
+
 
   void _setToggles() {
-    for (var loc in northBayLocs) {
+    for (var loc in locs) {
       _toggles[loc] = false;
     }
-    for (var loc in southBayLocs) {
-      _toggles[loc] = false;
-    }
-    for (var loc in eastBayLocs) {
-      _toggles[loc] = false;
+    for (var type in types) {
+      _toggles[type] = false;
     }
   }
 
   void _submit() {
     setState(() => _submitted = true);
     _saveLocations();
+    _saveTypes();
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -57,6 +56,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void _saveLocations() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setStringList('locations', _loc_list);
+  }
+
+  void _saveTypes() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setStringList('types', _type_list);
   }
 
   void initState() {
@@ -121,9 +125,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                   ),
                   SettingsSection(
-                    title: Text('North Bay Locations'),
+                    title: Text('Locations'),
                     tiles: <SettingsTile>[
-                      for (var loc in northBayLocs)
+                      for (var loc in locs)
                         SettingsTile.switchTile(
                           initialValue: _toggles[loc],
                           onToggle: (value) {
@@ -141,43 +145,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ],
                   ),
                   SettingsSection(
-                    title: Text('South Bay Locations'),
+                    title: Text('Event Types'),
                     tiles: <SettingsTile>[
-                      for (var loc in southBayLocs)
+                      for (var type in types)
                         SettingsTile.switchTile(
-                          initialValue: _toggles[loc],
+                          initialValue: _toggles[type],
                           onToggle: (value) {
                             setState(() {
-                              _toggles[loc] = value;
+                              _toggles[type] = value;
                             });
-                            _toggles[loc]!
-                                ? _loc_list.add(loc)
-                                : _loc_list.contains(loc)
-                                    ? _loc_list.remove(loc)
-                                    : {};
-
+                            _toggles[type]!
+                                ? _type_list.add(type)
+                                : _type_list.contains(type)
+                                ? _type_list.remove(type)
+                                : {};
                           },
-                          title: Text(loc),
-                        )
-                    ],
-                  ),
-                  SettingsSection(
-                    title: Text('East Bay Locations'),
-                    tiles: <SettingsTile>[
-                      for (var loc in eastBayLocs)
-                        SettingsTile.switchTile(
-                          initialValue: _toggles[loc],
-                          onToggle: (value) {
-                            setState(() {
-                              _toggles[loc] = value;
-                            });
-                            _toggles[loc]!
-                                ? _loc_list.add(loc)
-                                : _loc_list.contains(loc)
-                                    ? _loc_list.remove(loc)
-                                    : {};
-                          },
-                          title: Text(loc),
+                          title: Text(type),
                         )
                     ],
                   ),
