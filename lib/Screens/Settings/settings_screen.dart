@@ -169,7 +169,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       children: <Widget>[
                         RoundedButton(
                           text: "Save Preferences",
-                          press: () {_submit();},
+                          press: () {
+                            _submit();
+                            },
                           color: kPrimaryColor,
                           textColor: Colors.white,
                         ),

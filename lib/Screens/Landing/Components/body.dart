@@ -29,7 +29,7 @@ class _PrefBodyState extends State<LandingBody> {
   String _username = "No name";
   String _enabled = "Unknown";
   List<String> _locations = List.empty(growable: true);
-
+  bool updated = false;
   void _getUsername() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -65,73 +65,204 @@ class _PrefBodyState extends State<LandingBody> {
 
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    List<Calendar> events = [];
+    List<Color> colors = [];
+    int count = 0;
     return Background(
       child: Scaffold(
-        appBar: AppBar(
-          foregroundColor: Colors.black,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/images/wehope_logo.jpg',
-                width: size.width * 0.4,
+          appBar: AppBar(
+            foregroundColor: Colors.black,
+            backgroundColor: Colors.white,
+            elevation: 0,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/wehope_logo.jpg',
+                  width: size.width * 0.4,
+                ),
+              ],
+            ),
+          ),
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Wrap(
+                alignment: WrapAlignment.center,
+                crossAxisAlignment: WrapCrossAlignment.end,
+                children: <Widget>[
+                  SizedBox(height: size.height * 0.05),
+                  Text(
+                    "Hello ",
+                    style:
+                        TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
+                  ),
+                  Text(
+                    _username,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                  ),
+                ],
+              ),
+              Wrap(
+                alignment: WrapAlignment.center,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: <Widget>[
+                  SizedBox(height: size.height * 0.1),
+                  Text(
+                    textAlign: TextAlign.center,
+                    "You have the following events today in: ",
+                    style:
+                        TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
+                  ),
+                ],
+              ),
+              _locations.contains('SF')
+                  ? FutureBuilder<Calendar>(
+                      future: fetchCalendars(http.Client(),
+                          'https://www.googleapis.com/calendar/v3/calendars/fdm09jjfsg4ll5lsbn4o24q6o8@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY'),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: Text(snapshot.error.toString()),
+                          );
+                        } else if (snapshot.hasData) {
+                          events.add(snapshot.data!);
+                          colors.add(Colors.amber);
+                          count++;
+                          return Text(
+                            textAlign: TextAlign.center,
+                            "SF",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.amber),
+                          );
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
+                    )
+                  : SizedBox.shrink(),
+              _locations.contains('East Bay')
+                  ? FutureBuilder<Calendar>(
+                      future: fetchCalendars(http.Client(),
+                          'https://www.googleapis.com/calendar/v3/calendars/03bgjolvc1prh750i0m9qujddc@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY'),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: Text(snapshot.error.toString()),
+                          );
+                        } else if (snapshot.hasData) {
+                          events.add(snapshot.data!);
+                          colors.add(Colors.deepPurple);
+                          count++;
+                          return Text(
+                            textAlign: TextAlign.center,
+                            "East Bay",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.deepPurple),
+                          );
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
+                    )
+                  : SizedBox.shrink(),
+              _locations.contains('South Bay')
+                  ? FutureBuilder<Calendar>(
+                      future: fetchCalendars(http.Client(),
+                          'https://www.googleapis.com/calendar/v3/calendars/extreme.wehope@gmail.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY'),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: Text(snapshot.error.toString()),
+                          );
+                        } else if (snapshot.hasData) {
+                          events.add(snapshot.data!);
+                          colors.add(Colors.teal);
+                          count++;
+                          return Text(
+                            textAlign: TextAlign.center,
+                            "South Bay",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.teal),
+                          );
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
+                    )
+                  : SizedBox.shrink(),
+              _locations.contains('Peninsula')
+                  ? FutureBuilder<Calendar>(
+                      future: fetchCalendars(http.Client(),
+                          'https://www.googleapis.com/calendar/v3/calendars/a01n633sb75lqben0i41uhmog8@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY'),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: Text(snapshot.error.toString()),
+                          );
+                        } else if (snapshot.hasData) {
+                          events.add(snapshot.data!);
+                          colors.add(kPrimaryLightColor);
+                          count++;
+
+                          return Text(
+                            textAlign: TextAlign.center,
+                            "Peninsula",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: kPrimaryLightColor),
+                          );
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
+                    )
+                  : SizedBox.shrink(),
+              Text("hello baby"),
+              EventList(
+                calendars: events,
+                colors: colors,
+                count: count,
               ),
             ],
           ),
-        ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Wrap(
-              alignment: WrapAlignment.center,
-              crossAxisAlignment: WrapCrossAlignment.end,
-              children: <Widget>[
-                SizedBox(height: size.height * 0.05),
-                Text(
-                  "Hello ",
-                  style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
-                ),
-                Text(
-                  _username,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-                ),
-              ],
-            ),
-            Wrap(
-              alignment: WrapAlignment.center,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: <Widget>[
-                SizedBox(height: size.height * 0.1),
-                Text(
-                  "You have the following events coming up ",
-                  style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
-                ),
-              ],
-            ),
-            FutureBuilder<Calendar>(
-              future: fetchCalendars(http.Client(), _locations),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  print(snapshot.error.toString());
-                  return Center(
-                    child:  Text(snapshot.error.toString()),
-                  );
-                } else if (snapshot.hasData) {
-                  return EventList(calendar: snapshot.data!);
-                } else {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              },
-            ),
-          ],
-        ),
-      ),
+          bottomNavigationBar: BottomNavigationBar(
+            backgroundColor: Colors.white,
+            iconSize: 25,
+            selectedItemColor: kPrimaryColor,
+            unselectedItemColor: kPrimaryLightColor,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home_sharp),
+                label: "Home",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.calendar_month_sharp),
+                label: "Calendar",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings_sharp),
+                label: "Settings",
+              ),
+            ],
+          )),
     );
   }
 }
