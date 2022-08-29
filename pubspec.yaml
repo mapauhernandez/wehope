@@ -32,6 +32,7 @@ dependencies:
   shared_preferences: ^2.0.15
   settings_ui: ^2.0.2
   http: ^0.13.4
+  syncfusion_flutter_calendar: ^20.2.45
 
 
 

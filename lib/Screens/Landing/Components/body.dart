@@ -26,6 +26,7 @@ class LandingBody extends StatefulWidget {
 }
 
 class _PrefBodyState extends State<LandingBody> {
+  int currentIndex = 0;
   String _username = "No name";
   String _enabled = "Unknown";
   List<String> _locations = List.empty(growable: true);
@@ -68,24 +69,7 @@ class _PrefBodyState extends State<LandingBody> {
     List<Calendar> events = [];
     List<Color> colors = [];
     int count = 0;
-    return Background(
-      child: Scaffold(
-          appBar: AppBar(
-            foregroundColor: Colors.black,
-            backgroundColor: Colors.white,
-            elevation: 0,
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/images/wehope_logo.jpg',
-                  width: size.width * 0.4,
-                ),
-              ],
-            ),
-          ),
-          body: Column(
+    return Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
@@ -235,34 +219,13 @@ class _PrefBodyState extends State<LandingBody> {
                       },
                     )
                   : SizedBox.shrink(),
-              Text("hello baby"),
+              Text("hello ddd"),
               EventList(
                 calendars: events,
                 colors: colors,
                 count: count,
               ),
             ],
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            backgroundColor: Colors.white,
-            iconSize: 25,
-            selectedItemColor: kPrimaryColor,
-            unselectedItemColor: kPrimaryLightColor,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home_sharp),
-                label: "Home",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.calendar_month_sharp),
-                label: "Calendar",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.settings_sharp),
-                label: "Settings",
-              ),
-            ],
-          )),
-    );
+          );
   }
 }

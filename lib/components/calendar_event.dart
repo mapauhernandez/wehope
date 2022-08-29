@@ -42,17 +42,17 @@ class Event {
       i++;
     }
 
-    final unformattedend = data['start']['dateTime'];
+    final unformattedend = data['end']['dateTime'];
     String endDate = '';
     int j = 0;
-    while(unformattedend[i] != 'T'){
-      endDate+=unformattedend[i];
+    while(unformattedend[j] != 'T'){
+      endDate+=unformattedend[j];
       j++;
     }
     j++;
     String endTimeU = '';
-    while(unformattedend[i] != '-'){
-      endTimeU+=unformattedend[i];
+    while(unformattedend[j] != '-'){
+      endTimeU+=unformattedend[j];
       j++;
     }
     final startTime = DateTime.parse(startDate + ' ' + startTimeU);

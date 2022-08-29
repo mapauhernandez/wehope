@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wehope/Screens/Login/Components/background.dart';
 import 'package:settings_ui/settings_ui.dart';
+import 'package:wehope/Screens/Settings/Components/body.dart';
 
 import '../../components/rounded_button.dart';
 import '../../constants.dart';
 import '../Landing/landing_screen.dart';
+import 'Components/settings_appbar.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -73,25 +75,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     Size size = MediaQuery.of(context).size;
     return Background(
       child: Scaffold(
-        appBar: AppBar(
-          foregroundColor: Colors.black,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "Settings    ",
-                style: TextStyle(fontSize: 25),
-              ),
-              Image.asset(
-                'assets/images/wehope_logo.jpg',
-                width: size.width * 0.4,
-              ),
-            ],
-          ),
-        ),
+        appBar: SettingsAppBar(),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -119,8 +103,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       child: Text(
                         "Select which locations and event types you'd like to see events for",
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 15, fontStyle: FontStyle.italic),
+                        style: TextStyle(fontSize: 15, fontStyle: FontStyle.italic),
                       ),
                     ),
                   ),
@@ -137,8 +120,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             _toggles[loc]!
                                 ? _loc_list.add(loc)
                                 : _loc_list.contains(loc)
-                                    ? _loc_list.remove(loc)
-                                    : {};
+                                ? _loc_list.remove(loc)
+                                : {};
                           },
                           title: Text(loc),
                         )
@@ -171,7 +154,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           text: "Save Preferences",
                           press: () {
                             _submit();
-                            },
+                          },
                           color: kPrimaryColor,
                           textColor: Colors.white,
                         ),
