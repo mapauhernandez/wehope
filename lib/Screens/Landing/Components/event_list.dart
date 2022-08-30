@@ -10,7 +10,7 @@ import '../../Settings/settings_screen.dart';
 import '../../../components/calendar_event.dart';
 import 'package:intl/intl.dart';
 
-class EventList extends StatelessWidget {
+class EventList extends StatefulWidget {
   EventList(
       {super.key,
       required this.calendars,
@@ -23,19 +23,25 @@ class EventList extends StatelessWidget {
   final List<Color> colors;
   final int count;
 
+  @override
+  State<EventList> createState() => _EventListState();
+}
+
+class _EventListState extends State<EventList> {
   bool calculateDifference(DateTime date, int weekday) {
     DateTime now = DateTime.now();
     var ans = now.weekday == weekday;
     return ans;
   }
-
-  int index = 0;
   List<Event> events = [];
-  List<Color> color_list = [];
 
-  Widget build(BuildContext context) {
-    for (var cals in calendars) {
-      Color color = colors[index];
+  List<Color> color_list = [];
+  int i = 0;
+
+  void initState(){
+    super.initState();
+    for (var cals in widget.calendars) {
+      Color color = widget.colors[i];
       for (var event in cals.events) {
         if (calculateDifference(event.startTime, event.weekday) == true) {
           if (!events.contains(event)) {
@@ -44,8 +50,15 @@ class EventList extends StatelessWidget {
           }
         }
       }
-      index ++;
+      i ++;
     }
+    setState(() {
+      i = 0;
+    });
+  }
+
+  Widget build(BuildContext context) {
+    print("eventlist");
     return Expanded(
       child: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

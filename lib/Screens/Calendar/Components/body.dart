@@ -20,6 +20,8 @@ import 'package:maps_launcher/maps_launcher.dart';
 
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
+import 'datasource.dart';
+
 class CalendarBody extends StatefulWidget {
   const CalendarBody({Key? key}) : super(key: key);
 
@@ -66,6 +68,8 @@ class _CalendarBodyState extends State<CalendarBody> {
     _getLocations();
   }
 
+  bool _wifi = true;
+
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     List<Calendar> events = [];
@@ -102,26 +106,152 @@ class _CalendarBodyState extends State<CalendarBody> {
             ),
           ],
         ),
-        SafeArea(
-          child: SfCalendar(
-            view: CalendarView.week,
-            timeSlotViewSettings: TimeSlotViewSettings(
-              timeIntervalHeight: 40,
-            ),
-            timeZone: 'Pacific Standard Time',
-            cellEndPadding: 5,
-            showNavigationArrow: true,
-            backgroundColor: kPrimaryLightColor,
-            selectionDecoration: BoxDecoration(
-              color: Colors.transparent,
-              border: Border.all(color: kPrimaryColor, width: 2),
-              borderRadius: const BorderRadius.all(Radius.circular(4)),
-              shape: BoxShape.rectangle,
-            ),
-            todayHighlightColor: kPrimaryColor,
-            showCurrentTimeIndicator: true,
-          ),
-        ),
+        _locations.contains('SF')
+            ? FutureBuilder<Calendar>(
+                future: fetchCalendars(http.Client(),
+                    'https://www.googleapis.com/calendar/v3/calendars/fdm09jjfsg4ll5lsbn4o24q6o8@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY'),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    _wifi = false;
+                    return SizedBox.shrink();
+                  } else if (snapshot.hasData) {
+                    _wifi = true;
+                    events.add(snapshot.data!);
+                    colors.add(Colors.amber);
+                    count++;
+                    return Text(
+                      textAlign: TextAlign.center,
+                      "SF",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.amber),
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              )
+            : SizedBox.shrink(),
+        _locations.contains('East Bay')
+            ? FutureBuilder<Calendar>(
+                future: fetchCalendars(http.Client(),
+                    'https://www.googleapis.com/calendar/v3/calendars/03bgjolvc1prh750i0m9qujddc@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY'),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    _wifi = false;
+                    return SizedBox.shrink();
+                  } else if (snapshot.hasData) {
+                    _wifi = true;
+                    events.add(snapshot.data!);
+                    colors.add(Colors.deepPurple);
+                    count++;
+                    return Text(
+                      textAlign: TextAlign.center,
+                      "East Bay",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.deepPurple),
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              )
+            : SizedBox.shrink(),
+        _locations.contains('South Bay')
+            ? FutureBuilder<Calendar>(
+                future: fetchCalendars(http.Client(),
+                    'https://www.googleapis.com/calendar/v3/calendars/extreme.wehope@gmail.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY'),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    _wifi = false;
+                    return SizedBox.shrink();
+                  } else if (snapshot.hasData) {
+                    _wifi = true;
+                    events.add(snapshot.data!);
+                    colors.add(Colors.teal);
+                    count++;
+                    return Text(
+                      textAlign: TextAlign.center,
+                      "South Bay",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.teal),
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              )
+            : SizedBox.shrink(),
+        _locations.contains('Peninsula')
+            ? FutureBuilder<Calendar>(
+                future: fetchCalendars(http.Client(),
+                    'https://www.googleapis.com/calendar/v3/calendars/a01n633sb75lqben0i41uhmog8@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY'),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    _wifi = false;
+                    return SizedBox.shrink();
+                  } else if (snapshot.hasData) {
+                    _wifi = true;
+                    events.add(snapshot.data!);
+                    colors.add(kPrimaryLightColor);
+                    count++;
+
+                    return Text(
+                      textAlign: TextAlign.center,
+                      "Peninsula",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: kPrimaryLightColor),
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              )
+            : SizedBox.shrink(),
+        _wifi == true ? SfCalendar(
+                view: CalendarView.week,
+                dataSource: MeetingDataSource(events, colors),
+                timeSlotViewSettings: TimeSlotViewSettings(
+                  timeIntervalHeight: 40,
+                ),
+                timeZone: 'Pacific Standard Time',
+                cellEndPadding: 5,
+                showNavigationArrow: true,
+                backgroundColor: kPrimaryLightColor,
+                selectionDecoration: BoxDecoration(
+                  color: Colors.transparent,
+                  border: Border.all(color: kPrimaryColor, width: 2),
+                  borderRadius: const BorderRadius.all(Radius.circular(4)),
+                  shape: BoxShape.rectangle,
+                ),
+                todayHighlightColor: kPrimaryColor,
+                showCurrentTimeIndicator: true,
+              )
+            : AlertDialog(
+                title: Text("ERROR "),
+                content: Text("You need internet connection to see the events"),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.of(context, rootNavigator: true).pop('dialog'),
+                    child: Text("OK"),
+                  ),
+                ],
+              ),
       ],
     );
   }
