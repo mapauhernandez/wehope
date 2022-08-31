@@ -11,13 +11,12 @@ import '../../../components/calendar_event.dart';
 import 'package:intl/intl.dart';
 
 class EventList extends StatefulWidget {
-  EventList(
-      {super.key,
-      required this.calendars,
-      required this.colors,
-        required this.count,
-
-      });
+  EventList({
+    super.key,
+    required this.calendars,
+    required this.colors,
+    required this.count,
+  });
 
   final List<Calendar> calendars;
   final List<Color> colors;
@@ -33,32 +32,33 @@ class _EventListState extends State<EventList> {
     var ans = now.weekday == weekday;
     return ans;
   }
-  List<Event> events = [];
 
-  List<Color> color_list = [];
-  int i = 0;
-
-  void initState(){
-    super.initState();
+  Widget build(BuildContext context) {
+    List<Event> events = [];
+    List<Color> color_list = [];
+    int i = 0;
     for (var cals in widget.calendars) {
-      Color color = widget.colors[i];
       for (var event in cals.events) {
         if (calculateDifference(event.startTime, event.weekday) == true) {
           if (!events.contains(event)) {
             events.add(event);
-            color_list.add(color);
+            if (cals.name == 'SF') {
+              color_list.add(kPrimaryLightColor);
+            }
+            if (cals.name == 'East Bay') {
+              color_list.add(Colors.amber);
+            }
+            if (cals.name == 'South Bay') {
+              color_list.add(Colors.deepPurpleAccent);
+            }
+            if (cals.name == 'Peninsula') {
+              color_list.add(Colors.red);
+            }
           }
         }
       }
-      i ++;
+      i++;
     }
-    setState(() {
-      i = 0;
-    });
-  }
-
-  Widget build(BuildContext context) {
-    print("eventlist");
     return Expanded(
       child: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -129,7 +129,7 @@ class _EventListState extends State<EventList> {
                           text: events[index].description,
                           color: Colors.white,
                           icon_color: Colors.black,
-              )
+                        )
                       ],
                     ),
                     Wrap(

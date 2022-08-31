@@ -18,11 +18,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-Future<Calendar> fetchCalendars(http.Client client, location_api) async {
-  final response = await client
-      .get(Uri.parse(location_api));
-  // Use the compute function to run parsePhotos in a separate isolate.
-  return compute(parseCalendars, response.body);
+Future<List<Calendar>> fetchCalendars(http.Client client, Map apis) async {
+
+  List<Calendar> cals = [];
+  for (var loc in apis.keys){
+    final response = await client
+        .get(Uri.parse(apis[loc]));
+    var comp = await compute(parseCalendars, response.body);
+    cals.add(comp);
+  }
+  return cals;
 }
 
 // A function that converts a response body into a List<Photo>.
