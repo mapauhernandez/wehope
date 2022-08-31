@@ -23,8 +23,8 @@ class _SettingsBodyState extends State<SettingsBody> {
   bool _submitted = false;
 
 
-  List<String> locs = ["South Bay", "East Bay", "Peninsula", "SF"];
-  List<String> types = ["Medical", "Beauty", "Hygiene"];
+  List<String> locs = ["South Bay", "East Bay", "Peninsula", "SF", "LA"];
+  List<String> types = ["Medical", "Beauty", "Dignity on Wheels"];
 
 
   void _getNotifPref() async {
