@@ -59,23 +59,23 @@ class _PrefBodyState extends State<CWLandingBody> {
 
       if (loc == 'SF') {
         apis['SF'] =
-            'https://www.googleapis.com/calendar/v3/calendars/fdm09jjfsg4ll5lsbn4o24q6o8@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+            'https://www.googleapis.com/calendar/v3/calendars/58anp4lmijosl0a2277mh7k5hs@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
       }
       if (loc == 'East Bay') {
         apis['East Bay'] =
-            'https://www.googleapis.com/calendar/v3/calendars/03bgjolvc1prh750i0m9qujddc@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+            'https://www.googleapis.com/calendar/v3/calendars/rhcgkobu2nteadc2qq1gof4pik@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
       }
       if (loc == 'South Bay') {
         apis['South Bay'] =
-            'https://www.googleapis.com/calendar/v3/calendars/extreme.wehope@gmail.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+            'https://www.googleapis.com/calendar/v3/calendars/squ26o8occ0m5704erv9lq9m4o@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
       }
       if (loc == 'Peninsula') {
         apis['Peninsula'] =
-            'https://www.googleapis.com/calendar/v3/calendars/a01n633sb75lqben0i41uhmog8@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+            'https://www.googleapis.com/calendar/v3/calendars/f10nh977rn38nf36fanu3j44ck@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
       }
       if (loc == 'LA') {
         apis['LA'] =
-        'https://www.googleapis.com/calendar/v3/calendars/o58iv89dhfspkqo50pkrvtjho8@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        'https://www.googleapis.com/calendar/v3/calendars/a3uq0g1khhmniadmkllktnq05g@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
       }
     }
   }
@@ -169,13 +169,21 @@ class _PrefBodyState extends State<CWLandingBody> {
           crossAxisAlignment: WrapCrossAlignment.center,
           children: children,
         ),
-        Wrap(
-          alignment: WrapAlignment.center,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            Text("Casework events")
-          ],
-        ),
+        FutureBuilder<List<Calendar>>(
+          future: fetchCalendars(http.Client(), apis),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Text(snapshot.error.toString());
+            } else if (snapshot.hasData) {
+              return EventList(
+                  calendars: snapshot.data!, colors: colors, count: count);
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
+        )
       ],
     );
   }
