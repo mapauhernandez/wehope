@@ -20,8 +20,6 @@ import 'package:maps_launcher/maps_launcher.dart';
 
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
-import 'datasource.dart';
-
 class CalendarBody extends StatefulWidget {
   const CalendarBody({Key? key}) : super(key: key);
 
@@ -75,6 +73,46 @@ class _CalendarBodyState extends State<CalendarBody> {
     List<Calendar> events = [];
     List<Color> colors = [];
     int count = 0;
+
+    final children = <Widget>[];
+    Color col = Colors.black;
+
+    for (var i = 0; i < _locations.length; i++) {
+      if (_locations[i] == 'SF') {
+        col = kPrimaryLightColor;
+      }
+      if (_locations[i] == 'East Bay') {
+        col = Colors.amber;
+      }
+      if (_locations[i] == 'South Bay') {
+        col = Colors.deepPurpleAccent;
+      }
+      if (_locations[i] == 'Peninsula') {
+        col = Colors.red;
+      }
+      if (_locations[i] == 'LA') {
+        col = Colors.orangeAccent;
+      }
+      children.add(new Text(
+        textAlign: TextAlign.center,
+        _locations[i],
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+          color: col,
+        ),
+      ));
+      children.add(new Text(
+        textAlign: TextAlign.center,
+        ' ',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+          color: col,
+        ),
+      ));
+    }
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -106,7 +144,100 @@ class _CalendarBodyState extends State<CalendarBody> {
             ),
           ],
         ),
+        SfCalendar(
+          view: CalendarView.week,
+          dataSource: MeetingDataSource(_getDataSource()),
+          monthViewSettings: MonthViewSettings(
+              appointmentDisplayMode: MonthAppointmentDisplayMode.appointment),
+        ),
+        Wrap(
+          alignment: WrapAlignment.center,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: children,
+        ),
       ],
     );
   }
+}
+
+List<Meeting> _getDataSource() {
+  final List<Meeting> meetings = <Meeting>[];
+  DateTime today = DateTime.now();
+  DateTime startTime = DateTime(today.year, today.month, today.day, 9, 0, 0);
+  DateTime endTime = startTime.add(const Duration(hours: 2));
+
+  meetings.add(Meeting('DoW', startTime, endTime, kPrimaryLightColor, false));
+
+  startTime = DateTime(today.year, today.month, 2, 9, 0, 0);
+  endTime = startTime.add(const Duration(hours: 2));
+
+  meetings.add(Meeting('Hair Care', startTime, endTime, Colors.amber, false));
+
+  startTime = DateTime(today.year, DateTime.august, 31, 9, 0, 0);
+  endTime = startTime.add(const Duration(hours: 2));
+
+  meetings.add(Meeting('HHM', startTime, endTime, Colors.deepPurpleAccent, false));
+
+
+  startTime = DateTime(today.year, DateTime.august, 30, 9, 0, 0);
+  endTime = startTime.add(const Duration(hours: 2));
+
+  meetings.add(Meeting('DoW', startTime, endTime, kPrimaryLightColor, false));
+
+  startTime = DateTime(today.year, DateTime.august, 29, 9, 0, 0);
+  endTime = startTime.add(const Duration(hours: 2));
+
+  meetings.add(Meeting('Eye Clinic', startTime, endTime, Colors.red, false));
+
+  startTime = DateTime(today.year, DateTime.august, 28, 9, 0, 0);
+  endTime = startTime.add(const Duration(hours: 2));
+
+  meetings.add(Meeting('Dental Clinic', startTime, endTime, Colors.orangeAccent, false));
+
+  startTime = DateTime(today.year, DateTime.september, 3, 9, 0, 0);
+  endTime = startTime.add(const Duration(hours: 2));
+
+  meetings.add(Meeting('DoW Clinic', startTime, endTime, kPrimaryLightColor, false));
+  return meetings;
+}
+
+class MeetingDataSource extends CalendarDataSource {
+  MeetingDataSource(List<Meeting> source) {
+    appointments = source;
+  }
+
+  @override
+  DateTime getStartTime(int index) {
+    return appointments![index].from;
+  }
+
+  @override
+  DateTime getEndTime(int index) {
+    return appointments![index].to;
+  }
+
+  @override
+  String getSubject(int index) {
+    return appointments![index].eventName;
+  }
+
+  @override
+  Color getColor(int index) {
+    return appointments![index].background;
+  }
+
+  @override
+  bool isAllDay(int index) {
+    return appointments![index].isAllDay;
+  }
+}
+
+class Meeting {
+  Meeting(this.eventName, this.from, this.to, this.background, this.isAllDay);
+
+  String eventName;
+  DateTime from;
+  DateTime to;
+  Color background;
+  bool isAllDay;
 }

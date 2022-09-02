@@ -183,7 +183,7 @@ class _PrefBodyState extends State<MedLandingBody> {
               );
             }
           },
-        )
+        ),
       ],
     );
   }

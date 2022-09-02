@@ -42,8 +42,6 @@ class _EventListState extends State<EventList> {
         if (calculateDifference(event.startTime, event.weekday) == true) {
           if (events.contains(event) == false) {
             events.add(event);
-            print(event.name);
-            print(color_list.length);
             if (cals.name == 'Beauty-SF') {
               color_list.add(kPrimaryLightColor);
             }
