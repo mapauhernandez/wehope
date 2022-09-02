@@ -54,6 +54,9 @@ class _EventListState extends State<EventList> {
             if (cals.name == 'Peninsula') {
               color_list.add(Colors.red);
             }
+            if (cals.name == 'LA') {
+              color_list.add(Colors.orangeAccent);
+            }
           }
         }
       }

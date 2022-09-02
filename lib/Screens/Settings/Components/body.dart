@@ -24,7 +24,7 @@ class _SettingsBodyState extends State<SettingsBody> {
 
 
   List<String> locs = ["South Bay", "East Bay", "Peninsula", "SF", "LA"];
-  List<String> types = ["Medical", "Beauty", "Dignity on Wheels"];
+  List<String> types = ["Medical", "Beauty", "Dignity on Wheels", "Casework"];
 
 
   void _getNotifPref() async {

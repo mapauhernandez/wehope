@@ -31,34 +31,48 @@ class Event {
     final unformatted = data['start']['dateTime'];
     String startDate = '';
     int i = 0;
-    while(unformatted[i] != 'T'){
-      startDate+=unformatted[i];
+    final recurrence =
+        data['recurrence'] != null ? data['recurrence'][0] as String : "NO";
+
+    var startTime;
+    var endTime;
+
+    while (unformatted[i] != 'T') {
+      startDate += unformatted[i];
       i++;
     }
     i++;
     String startTimeU = '';
-    while(unformatted[i] != '-'){
-      startTimeU+=unformatted[i];
+    while (unformatted[i] != 'Z' && unformatted[i] != '-') {
+      startTimeU += unformatted[i];
       i++;
+    }
+    bool weirdTime = false;
+    if (unformatted[i] == 'Z'){
+      weirdTime = true;
     }
 
     final unformattedend = data['end']['dateTime'];
     String endDate = '';
     int j = 0;
-    while(unformattedend[j] != 'T'){
-      endDate+=unformattedend[j];
+    while (unformattedend[j] != 'T') {
+      endDate += unformattedend[j];
       j++;
     }
     j++;
     String endTimeU = '';
-    while(unformattedend[j] != '-'){
-      endTimeU+=unformattedend[j];
+    while (unformattedend[j] != 'Z' && unformattedend[j] != '-') {
+      endTimeU += unformattedend[j];
       j++;
     }
-    final startTime = DateTime.parse(startDate + ' ' + startTimeU);
-    final endTime = DateTime.parse(endDate + ' ' + endTimeU);
+    startTime = DateTime.parse(startDate + ' ' + startTimeU);
+    endTime = DateTime.parse(endDate + ' ' + endTimeU);
 
-    final recurrence = data['recurrence'] != null ? data['recurrence'][0] as String : "NO";
+    if (weirdTime){
+      startTime = startTime.subtract(const Duration(hours: 7));
+      endTime = endTime.subtract(const Duration(hours: 7));
+    }
+
     var code = recurrence.substring(recurrence.length - 2);
     int weekday = 0;
     switch (code) {
@@ -100,8 +114,7 @@ class Event {
         break;
       default:
         {
-          weekday  = startTime.weekday;
-
+          weekday = startTime.weekday;
         }
     }
     return Event(
@@ -114,7 +127,6 @@ class Event {
         weekday: weekday);
   }
 
-
   Map<String, dynamic> toJson() {
     return {
       'name': name,
@@ -123,7 +135,7 @@ class Event {
       'startTime': startTime,
       'endTime': endTime,
       'location': location,
-      'weekday' : weekday,
+      'weekday': weekday,
     };
   }
 }

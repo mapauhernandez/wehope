@@ -44,19 +44,19 @@ class _EventListState extends State<EventList> {
             events.add(event);
             print(event.name);
             print(color_list.length);
-            if (cals.name == 'DoW-SF') {
+            if (cals.name == 'SF') {
               color_list.add(kPrimaryLightColor);
             }
-            if (cals.name == 'DoW-East Bay') {
+            if (cals.name == 'East Bay') {
               color_list.add(Colors.amber);
             }
-            if (cals.name == 'DoW-South Bay') {
+            if (cals.name == 'South Bay') {
               color_list.add(Colors.deepPurpleAccent);
             }
-            if (cals.name == 'DoW-Peninsula') {
+            if (cals.name == 'Peninsula') {
               color_list.add(Colors.red);
             }
-            if (cals.name == 'DoW-LA') {
+            if (cals.name == 'LA') {
               color_list.add(Colors.orangeAccent);
             }
           }

@@ -24,7 +24,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool _submitted = false;
 
   List<String> locs = ["South Bay", "East Bay", "Peninsula", "SF", "LA"];
-  List<String> types = ["Medical", "Beauty", "Dignity on Wheels",];
+  List<String> types = ["Medical", "Beauty", "Dignity on Wheels", "Casework"];
 
 
   void _setToggles() {

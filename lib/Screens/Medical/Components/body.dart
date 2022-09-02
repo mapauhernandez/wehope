@@ -18,14 +18,14 @@ import 'package:maps_launcher/maps_launcher.dart';
 
 import 'event_list.dart';
 
-class DowLandingBody extends StatefulWidget {
-  const DowLandingBody({Key? key}) : super(key: key);
+class MedLandingBody extends StatefulWidget {
+  const MedLandingBody({Key? key}) : super(key: key);
 
   @override
-  State<DowLandingBody> createState() => _PrefBodyState();
+  State<MedLandingBody> createState() => _PrefBodyState();
 }
 
-class _PrefBodyState extends State<DowLandingBody> {
+class _PrefBodyState extends State<MedLandingBody> {
   Map apis = new Map();
   int currentIndex = 0;
   String _username = "No name";
@@ -59,23 +59,23 @@ class _PrefBodyState extends State<DowLandingBody> {
 
       if (loc == 'SF') {
         apis['SF'] =
-            'https://www.googleapis.com/calendar/v3/calendars/fdm09jjfsg4ll5lsbn4o24q6o8@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+            'https://www.googleapis.com/calendar/v3/calendars/kjsc3ndkm2gd4l9nengd6pmh4o@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
       }
       if (loc == 'East Bay') {
         apis['East Bay'] =
-            'https://www.googleapis.com/calendar/v3/calendars/03bgjolvc1prh750i0m9qujddc@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+            'https://www.googleapis.com/calendar/v3/calendars/bfvluerpp3rs1undkpsmvpd7a8@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
       }
       if (loc == 'South Bay') {
         apis['South Bay'] =
-            'https://www.googleapis.com/calendar/v3/calendars/extreme.wehope@gmail.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+            'https://www.googleapis.com/calendar/v3/calendars/0jnr1j69mj9v3fjm5hdbnf9hac@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
       }
       if (loc == 'Peninsula') {
         apis['Peninsula'] =
-            'https://www.googleapis.com/calendar/v3/calendars/a01n633sb75lqben0i41uhmog8@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+            'https://www.googleapis.com/calendar/v3/calendars/telnat3ibc2mqadj59q6rmpbh4@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
       }
       if (loc == 'LA') {
         apis['LA'] =
-        'https://www.googleapis.com/calendar/v3/calendars/o58iv89dhfspkqo50pkrvtjho8@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        'https://www.googleapis.com/calendar/v3/calendars/cvvdu84o0uoaltqlcion6peek4@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
       }
     }
   }
@@ -159,7 +159,7 @@ class _PrefBodyState extends State<DowLandingBody> {
             SizedBox(height: size.height * 0.1),
             Text(
               textAlign: TextAlign.center,
-              "You have the following events today in: ",
+              "You have the following events today: ",
               style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
             ),
           ],

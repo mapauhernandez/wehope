@@ -1,6 +1,5 @@
 
 import 'dart:collection';
-import 'dart:ffi';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -50,7 +49,6 @@ class Calendar {
   factory Calendar.fromJson(Map<String, dynamic> json) {
     final eventData = json['items'] as List<dynamic>?;
     // if the reviews are not missing
-
     final events = eventData != null
     // map each review to a Review object
         ? eventData.map((reviewData) => Event.fromJson(reviewData))
@@ -58,7 +56,6 @@ class Calendar {
         .toList()
     // use an empty list as fallback value
         : <Event>[];
-
     // return result passing all the arguments
     return Calendar(
       calID: json['etag'] as String,

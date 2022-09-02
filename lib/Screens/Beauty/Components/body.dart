@@ -18,14 +18,14 @@ import 'package:maps_launcher/maps_launcher.dart';
 
 import 'event_list.dart';
 
-class DowLandingBody extends StatefulWidget {
-  const DowLandingBody({Key? key}) : super(key: key);
+class BeautyLandingBody extends StatefulWidget {
+  const BeautyLandingBody({Key? key}) : super(key: key);
 
   @override
-  State<DowLandingBody> createState() => _PrefBodyState();
+  State<BeautyLandingBody> createState() => _PrefBodyState();
 }
 
-class _PrefBodyState extends State<DowLandingBody> {
+class _PrefBodyState extends State<BeautyLandingBody> {
   Map apis = new Map();
   int currentIndex = 0;
   String _username = "No name";
@@ -59,23 +59,23 @@ class _PrefBodyState extends State<DowLandingBody> {
 
       if (loc == 'SF') {
         apis['SF'] =
-            'https://www.googleapis.com/calendar/v3/calendars/fdm09jjfsg4ll5lsbn4o24q6o8@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+            'https://www.googleapis.com/calendar/v3/calendars/pj91tsbmctbuk395p15llvcn34@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
       }
       if (loc == 'East Bay') {
         apis['East Bay'] =
-            'https://www.googleapis.com/calendar/v3/calendars/03bgjolvc1prh750i0m9qujddc@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+            'https://www.googleapis.com/calendar/v3/calendars/vmiprjv5i5qukvbp1pn8cvmn8g@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
       }
       if (loc == 'South Bay') {
         apis['South Bay'] =
-            'https://www.googleapis.com/calendar/v3/calendars/extreme.wehope@gmail.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+            'https://www.googleapis.com/calendar/v3/calendars/ju4ilmj9cj9omtfanh5sp3j1u4@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
       }
       if (loc == 'Peninsula') {
         apis['Peninsula'] =
-            'https://www.googleapis.com/calendar/v3/calendars/a01n633sb75lqben0i41uhmog8@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+            'https://www.googleapis.com/calendar/v3/calendars/5ksb6c2otl837pd96jqgucqggc@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
       }
       if (loc == 'LA') {
         apis['LA'] =
-        'https://www.googleapis.com/calendar/v3/calendars/o58iv89dhfspkqo50pkrvtjho8@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        'https://www.googleapis.com/calendar/v3/calendars/jg5b0j4rdqona4s3r6l0sjq02g@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
       }
     }
   }
@@ -184,6 +184,7 @@ class _PrefBodyState extends State<DowLandingBody> {
             }
           },
         )
+
       ],
     );
   }
