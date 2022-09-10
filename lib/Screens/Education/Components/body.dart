@@ -18,14 +18,14 @@ import 'package:maps_launcher/maps_launcher.dart';
 
 import '../../../components/event_list.dart';
 
-class MedLandingBody extends StatefulWidget {
-  const MedLandingBody({Key? key}) : super(key: key);
+class BeautyLandingBody extends StatefulWidget {
+  const BeautyLandingBody({Key? key}) : super(key: key);
 
   @override
-  State<MedLandingBody> createState() => _PrefBodyState();
+  State<BeautyLandingBody> createState() => _PrefBodyState();
 }
 
-class _PrefBodyState extends State<MedLandingBody> {
+class _PrefBodyState extends State<BeautyLandingBody> {
   Map apis = new Map();
   int currentIndex = 0;
   String _username = "No name";
@@ -59,27 +59,27 @@ class _PrefBodyState extends State<MedLandingBody> {
 
       if (loc == 'SF') {
         apis['SF'] =
-            'https://www.googleapis.com/calendar/v3/calendars/kjsc3ndkm2gd4l9nengd6pmh4o@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+            'https://www.googleapis.com/calendar/v3/calendars/oh9js5h72kmckifvfssmtqifks@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
       }
       if (loc == 'East Bay') {
         apis['East Bay'] =
-            'https://www.googleapis.com/calendar/v3/calendars/bfvluerpp3rs1undkpsmvpd7a8@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+            'https://www.googleapis.com/calendar/v3/calendars/gc6dohpkvj46n5rk46knvj3db8@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
       }
       if (loc == 'South Bay') {
         apis['South Bay'] =
-            'https://www.googleapis.com/calendar/v3/calendars/0jnr1j69mj9v3fjm5hdbnf9hac@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+            'https://www.googleapis.com/calendar/v3/calendars/sdg0qu3hl65hsv5jisqm26jirk@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
       }
       if (loc == 'Peninsula') {
         apis['Peninsula'] =
-            'https://www.googleapis.com/calendar/v3/calendars/telnat3ibc2mqadj59q6rmpbh4@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+            'https://www.googleapis.com/calendar/v3/calendars/l1mujfljoeotcvicg03bv5cnt4@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
       }
       if (loc == 'LA') {
         apis['LA'] =
-        'https://www.googleapis.com/calendar/v3/calendars/cvvdu84o0uoaltqlcion6peek4@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        'https://www.googleapis.com/calendar/v3/calendars/0gi1b8ab2n2absjvi7lan73us0@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
       }
       if (loc == 'Marin') {
         apis['Marin'] =
-        'https://www.googleapis.com/calendar/v3/calendars/0lt7hl7gejd689kkfvn9geaeb0@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        'https://www.googleapis.com/calendar/v3/calendars/nvrdg2lfipapcjdocgcvr9j1v4@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
       }
     }
   }
@@ -166,7 +166,7 @@ class _PrefBodyState extends State<MedLandingBody> {
             SizedBox(height: size.height * 0.1),
             Text(
               textAlign: TextAlign.center,
-              "You have the following events today: ",
+              "You have the following events today in: ",
               style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
             ),
           ],
@@ -183,14 +183,15 @@ class _PrefBodyState extends State<MedLandingBody> {
               return Text(snapshot.error.toString());
             } else if (snapshot.hasData) {
               return EventList(
-                  calendars: snapshot.data!, colors: colors, count: count, day: DateTime.now(), eventType: "Medical",);
+                  calendars: snapshot.data!, colors: colors, count: count, day: DateTime.now(), eventType: "Education",);
             } else {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             }
           },
-        ),
+        )
+
       ],
     );
   }

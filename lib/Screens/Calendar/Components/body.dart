@@ -11,14 +11,15 @@ import '../../../components/text_field_container.dart';
 import '../../../constants.dart';
 import '../../../constants.dart';
 import '../../../constants.dart';
+import '../../../utils.dart';
+import 'event_list.dart';
 import '../../Settings/settings_screen.dart';
-import '../../../components/calendar_event.dart';
 
 import 'package:http/http.dart' as http;
 
 import 'package:maps_launcher/maps_launcher.dart';
 
-import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class CalendarBody extends StatefulWidget {
   const CalendarBody({Key? key}) : super(key: key);
@@ -28,11 +29,53 @@ class CalendarBody extends StatefulWidget {
 }
 
 class _CalendarBodyState extends State<CalendarBody> {
+  @override
+  void initState() {
+    _getTypes();
+    super.initState();
+    _getUsername();
+    _getNotifPref();
+    _getLocations();
+    _selectedDay = _focusedDay;
+    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
+  }
+
+  late final ValueNotifier<List<Event>> _selectedEvents;
+  CalendarFormat _calendarFormat = CalendarFormat.week;
+  DateTime _focusedDay = DateTime.now();
+  DateTime? _selectedDay;
+
+  @override
+  void dispose() {
+    _selectedEvents.dispose();
+    super.dispose();
+  }
+
+  List<Event> _getEventsForDay(DateTime day) {
+    // Implementation example
+    return kEvents[day] ?? [];
+  }
+
+  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    if (!isSameDay(_selectedDay, selectedDay)) {
+      setState(() {
+        _selectedDay = selectedDay;
+        _focusedDay = focusedDay;
+      });
+
+      _selectedEvents.value = _getEventsForDay(selectedDay);
+    }
+  }
+
   int currentIndex = 0;
   String _username = "No name";
   String _enabled = "Unknown";
   List<String> _locations = List.empty(growable: true);
+  List<String> _type_list = List.empty(growable: true);
   bool updated = false;
+
+  Map apis = new Map();
+
   void _getUsername() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -51,22 +94,47 @@ class _CalendarBodyState extends State<CalendarBody> {
     });
   }
 
+  void _getTypes() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _type_list = prefs.getStringList('types')!;
+    });
+  }
+
   void _getLocations() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       _locations = prefs.getStringList('locations')!;
     });
+    for (var loc in _locations) {
+      for (var type in _type_list) {
+        if (loc == 'SF' && type == 'Dignity on Wheels') {
+          apis['SF-DOW'] =
+              'https://www.googleapis.com/calendar/v3/calendars/fdm09jjfsg4ll5lsbn4o24q6o8@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'East Bay' && type == 'Dignity on Wheels') {
+          apis['East Bay-DOW'] =
+              'https://www.googleapis.com/calendar/v3/calendars/03bgjolvc1prh750i0m9qujddc@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'South Bay' && type == 'Dignity on Wheels') {
+          apis['South Bay-DOW'] =
+              'https://www.googleapis.com/calendar/v3/calendars/extreme.wehope@gmail.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'Peninsula' && type == 'Dignity on Wheels') {
+          apis['Peninsula-DOW'] =
+              'https://www.googleapis.com/calendar/v3/calendars/a01n633sb75lqben0i41uhmog8@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'LA' && type == 'Dignity on Wheels') {
+          apis['LA-DOW'] =
+              'https://www.googleapis.com/calendar/v3/calendars/o58iv89dhfspkqo50pkrvtjho8@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'Marin' && type == 'Dignity on Wheels') {
+          apis['Marin-DOW'] =
+              'https://www.googleapis.com/calendar/v3/calendars/1f1pdjh8rdsi4ccgus8qhtniao@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+      }
+    }
   }
-
-  @override
-  void initState() {
-    super.initState();
-    _getUsername();
-    _getNotifPref();
-    _getLocations();
-  }
-
-  bool _wifi = true;
 
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -92,6 +160,9 @@ class _CalendarBodyState extends State<CalendarBody> {
       }
       if (_locations[i] == 'LA') {
         col = Colors.orangeAccent;
+      }
+      if (_locations[i] == 'Marin') {
+        col = Colors.pink;
       }
       children.add(new Text(
         textAlign: TextAlign.center,
@@ -139,105 +210,73 @@ class _CalendarBodyState extends State<CalendarBody> {
             SizedBox(height: size.height * 0.1),
             Text(
               textAlign: TextAlign.center,
-              "This is what your week looks like",
+              "This is what your week looks like in ",
               style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
             ),
           ],
-        ),
-        SfCalendar(
-          view: CalendarView.week,
-          dataSource: MeetingDataSource(_getDataSource()),
-          monthViewSettings: MonthViewSettings(
-              appointmentDisplayMode: MonthAppointmentDisplayMode.appointment),
         ),
         Wrap(
           alignment: WrapAlignment.center,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: children,
         ),
+        TableCalendar<Event>(
+          firstDay: kFirstDay,
+          lastDay: kLastDay,
+          headerStyle: HeaderStyle(
+            titleCentered: true,
+            formatButtonVisible: false,
+          ),
+          focusedDay: _focusedDay,
+          selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+          calendarFormat: _calendarFormat,
+          startingDayOfWeek: StartingDayOfWeek.monday,
+          calendarStyle: CalendarStyle(
+            selectedDecoration: BoxDecoration(
+              color: kPrimaryColor,
+              shape: BoxShape.circle,
+            ),
+            outsideDaysVisible: false,
+            markersMaxCount: 1,
+            todayDecoration: BoxDecoration(
+              color: kPrimaryLightColor,
+              shape: BoxShape.circle,
+            ),
+          ),
+          onDaySelected: _onDaySelected,
+          onPageChanged: (focusedDay) {
+            _focusedDay = focusedDay;
+          },
+        ),
+        const SizedBox(height: 8.0),
+        FutureBuilder<List<Calendar>>(
+          future: fetchCalendars(http.Client(), apis),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Text(snapshot.error.toString());
+            } else if (snapshot.hasData) {
+              return EventList(
+                calendars: snapshot.data!,
+                colors: colors,
+                count: count,
+                day: _focusedDay,
+                eventType: [
+                  "DoW",
+                  "Beauty",
+                  "Casework",
+                  "Education",
+                  "Medical",
+                  "Other"
+                ],
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
+        )
       ],
     );
   }
-}
-
-List<Meeting> _getDataSource() {
-  final List<Meeting> meetings = <Meeting>[];
-  DateTime today = DateTime.now();
-  DateTime startTime = DateTime(today.year, today.month, today.day, 9, 0, 0);
-  DateTime endTime = startTime.add(const Duration(hours: 2));
-
-  meetings.add(Meeting('DoW', startTime, endTime, kPrimaryLightColor, false));
-
-  startTime = DateTime(today.year, today.month, 2, 9, 0, 0);
-  endTime = startTime.add(const Duration(hours: 2));
-
-  meetings.add(Meeting('Hair Care', startTime, endTime, Colors.amber, false));
-
-  startTime = DateTime(today.year, DateTime.august, 31, 9, 0, 0);
-  endTime = startTime.add(const Duration(hours: 2));
-
-  meetings.add(Meeting('HHM', startTime, endTime, Colors.deepPurpleAccent, false));
-
-
-  startTime = DateTime(today.year, DateTime.august, 30, 9, 0, 0);
-  endTime = startTime.add(const Duration(hours: 2));
-
-  meetings.add(Meeting('DoW', startTime, endTime, kPrimaryLightColor, false));
-
-  startTime = DateTime(today.year, DateTime.august, 29, 9, 0, 0);
-  endTime = startTime.add(const Duration(hours: 2));
-
-  meetings.add(Meeting('Eye Clinic', startTime, endTime, Colors.red, false));
-
-  startTime = DateTime(today.year, DateTime.august, 28, 9, 0, 0);
-  endTime = startTime.add(const Duration(hours: 2));
-
-  meetings.add(Meeting('Dental Clinic', startTime, endTime, Colors.orangeAccent, false));
-
-  startTime = DateTime(today.year, DateTime.september, 3, 9, 0, 0);
-  endTime = startTime.add(const Duration(hours: 2));
-
-  meetings.add(Meeting('DoW Clinic', startTime, endTime, kPrimaryLightColor, false));
-  return meetings;
-}
-
-class MeetingDataSource extends CalendarDataSource {
-  MeetingDataSource(List<Meeting> source) {
-    appointments = source;
-  }
-
-  @override
-  DateTime getStartTime(int index) {
-    return appointments![index].from;
-  }
-
-  @override
-  DateTime getEndTime(int index) {
-    return appointments![index].to;
-  }
-
-  @override
-  String getSubject(int index) {
-    return appointments![index].eventName;
-  }
-
-  @override
-  Color getColor(int index) {
-    return appointments![index].background;
-  }
-
-  @override
-  bool isAllDay(int index) {
-    return appointments![index].isAllDay;
-  }
-}
-
-class Meeting {
-  Meeting(this.eventName, this.from, this.to, this.background, this.isAllDay);
-
-  String eventName;
-  DateTime from;
-  DateTime to;
-  Color background;
-  bool isAllDay;
 }

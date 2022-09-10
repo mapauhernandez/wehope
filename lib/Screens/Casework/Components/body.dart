@@ -16,7 +16,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:maps_launcher/maps_launcher.dart';
 
-import 'event_list.dart';
+import '../../../components/event_list.dart';
 
 class CWLandingBody extends StatefulWidget {
   const CWLandingBody({Key? key}) : super(key: key);
@@ -77,6 +77,10 @@ class _PrefBodyState extends State<CWLandingBody> {
         apis['LA'] =
         'https://www.googleapis.com/calendar/v3/calendars/a3uq0g1khhmniadmkllktnq05g@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
       }
+      if (loc == 'Marin') {
+        apis['Marin'] =
+        'https://www.googleapis.com/calendar/v3/calendars/p8dk4sla9ck1phn8dn2t0k1pjk@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+      }
     }
   }
 
@@ -108,6 +112,9 @@ class _PrefBodyState extends State<CWLandingBody> {
       }
       if (_locations[i] == 'LA') {
         col = Colors.orangeAccent;
+      }
+      if (_locations[i] == 'Marin') {
+        col = Colors.pink;
       }
       children.add(new Text(
         textAlign: TextAlign.center,
@@ -176,7 +183,7 @@ class _PrefBodyState extends State<CWLandingBody> {
               return Text(snapshot.error.toString());
             } else if (snapshot.hasData) {
               return EventList(
-                  calendars: snapshot.data!, colors: colors, count: count);
+                  calendars: snapshot.data!, colors: colors, count: count, day: DateTime.now(), eventType: "Casework",);
             } else {
               return const Center(
                 child: CircularProgressIndicator(),

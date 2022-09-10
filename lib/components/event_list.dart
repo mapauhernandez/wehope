@@ -1,13 +1,13 @@
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:flutter/material.dart';
 
-import '../../../components/calendar.dart';
-import '../../../components/extended_text.dart';
-import '../../../components/rounded_button.dart';
-import '../../../components/text_field_container.dart';
-import '../../../constants.dart';
-import '../../Settings/settings_screen.dart';
-import '../../../components/calendar_event.dart';
+import 'calendar.dart';
+import 'extended_text.dart';
+import 'rounded_button.dart';
+import 'text_field_container.dart';
+import '../constants.dart';
+import '../Screens/Settings/settings_screen.dart';
+import 'calendar_event.dart';
 import 'package:intl/intl.dart';
 
 class EventList extends StatefulWidget {
@@ -16,51 +16,63 @@ class EventList extends StatefulWidget {
     required this.calendars,
     required this.colors,
     required this.count,
+    required this.day,
+    required this.eventType,
   });
 
   final List<Calendar> calendars;
   final List<Color> colors;
   final int count;
+  final DateTime day;
+  final String eventType;
 
   @override
   State<EventList> createState() => _EventListState();
 }
 
 class _EventListState extends State<EventList> {
-  bool calculateDifference(DateTime date, int weekday) {
-    DateTime now = DateTime.now();
+  bool calculateDifference(DateTime date, int weekday, String recurrence, DateTime endDate) {
+    DateTime now = widget.day;
+    bool expired = false;
+
+    DateTime _formatToday = DateTime(widget.day.year, widget.day.month, widget.day.day);
+
+    if(endDate.compareTo(_formatToday) < 0 ){
+      expired = true;
+    }
     var ans = now.weekday == weekday;
-    return ans;
+    return (ans & !expired);
   }
 
   Widget build(BuildContext context) {
     List<Event> events = [];
     List<Color> color_list = [];
-    int i = 0;
     for (var cals in widget.calendars) {
       for (var event in cals.events) {
-        if (calculateDifference(event.startTime, event.weekday) == true) {
+        if (calculateDifference(event.startTime, event.weekday, event.recurrence, event.endDate) == true) {
           if (events.contains(event) == false) {
             events.add(event);
-            if (cals.name == 'DoW-SF') {
+            if (cals.name == widget.eventType + '-SF') {
               color_list.add(kPrimaryLightColor);
             }
-            if (cals.name == 'DoW-East Bay') {
+            if (cals.name == widget.eventType + '-East Bay') {
               color_list.add(Colors.amber);
             }
-            if (cals.name == 'DoW-South Bay') {
+            if (cals.name == widget.eventType + '-South Bay') {
               color_list.add(Colors.deepPurpleAccent);
             }
-            if (cals.name == 'DoW-Peninsula') {
+            if (cals.name == widget.eventType + '-Peninsula') {
               color_list.add(Colors.red);
             }
-            if (cals.name == 'DoW-LA') {
+            if (cals.name == widget.eventType + '-LA') {
               color_list.add(Colors.orangeAccent);
+            }
+            if (cals.name == widget.eventType + '-Marin') {
+              color_list.add(Colors.pink);
             }
           }
         }
       }
-      i++;
     }
     return Expanded(
       child: GridView.builder(

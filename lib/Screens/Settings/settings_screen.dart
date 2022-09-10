@@ -23,8 +23,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Map<String, bool> _toggles = new Map();
   bool _submitted = false;
 
-  List<String> locs = ["South Bay", "East Bay", "Peninsula", "SF", "LA"];
-  List<String> types = ["Medical", "Beauty", "Dignity on Wheels", "Casework"];
+  List<String> locs = ["South Bay", "East Bay", "Peninsula", "SF", "LA", "Marin",];
+  List<String> types = ["Medical", "Beauty", "Dignity on Wheels", "Casework", "Education", "Other"];
 
 
   void _setToggles() {

@@ -12,7 +12,9 @@ import '../../../constants.dart';
 import '../../Beauty/landing_screen.dart';
 import '../../Casework/landing_screen.dart';
 import '../../DoW/landing_screen.dart';
+import '../../Education/landing_screen.dart';
 import '../../Medical/landing_screen.dart';
+import '../../Other/landing_screen.dart';
 import '../../Settings/settings_screen.dart';
 import '../../../components/calendar_event.dart';
 
@@ -20,7 +22,6 @@ import 'package:http/http.dart' as http;
 
 import 'package:maps_launcher/maps_launcher.dart';
 
-import 'event_list.dart';
 
 class LandingBody extends StatefulWidget {
   const LandingBody({Key? key}) : super(key: key);
@@ -30,7 +31,6 @@ class LandingBody extends StatefulWidget {
 }
 
 class _PrefBodyState extends State<LandingBody> {
-  Map apis = new Map();
   Map icons = new Map();
   Map cols = new Map();
   Map navs = new Map();
@@ -74,28 +74,6 @@ class _PrefBodyState extends State<LandingBody> {
       _locations = prefs.getStringList('locations')!;
     });
 
-    for (var loc in _locations) {
-      if (loc == 'SF') {
-        apis['SF'] =
-            'https://www.googleapis.com/calendar/v3/calendars/fdm09jjfsg4ll5lsbn4o24q6o8@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
-      }
-      if (loc == 'East Bay') {
-        apis['East Bay'] =
-            'https://www.googleapis.com/calendar/v3/calendars/03bgjolvc1prh750i0m9qujddc@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
-      }
-      if (loc == 'South Bay') {
-        apis['South Bay'] =
-            'https://www.googleapis.com/calendar/v3/calendars/extreme.wehope@gmail.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
-      }
-      if (loc == 'Peninsula') {
-        apis['Peninsula'] =
-            'https://www.googleapis.com/calendar/v3/calendars/a01n633sb75lqben0i41uhmog8@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
-      }
-      if (loc == 'LA') {
-        apis['LA'] =
-            'https://www.googleapis.com/calendar/v3/calendars/o58iv89dhfspkqo50pkrvtjho8@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
-      }
-    }
   }
 
   @override
@@ -136,6 +114,16 @@ class _PrefBodyState extends State<LandingBody> {
         cols['Casework'] = Colors.deepOrangeAccent;
         navs['Casework'] = CWLandingPage();
       }
+      if (pref == 'Education') {
+        icons['Education'] = Icons.menu_book;
+        cols['Education'] = Colors.pink;
+        navs['Education'] = EduLandingPage();
+      }
+      if (pref == 'Other') {
+        icons['Other'] = Icons.miscellaneous_services_outlined;
+        cols['Other'] = Colors.cyanAccent;
+        navs['Other'] = OtherLandingPage();
+      }
     }
 
     for (var i = 0; i < _locations.length; i++) {
@@ -153,6 +141,9 @@ class _PrefBodyState extends State<LandingBody> {
       }
       if (_locations[i] == 'LA') {
         col = Colors.lightGreen;
+      }
+      if (_locations[i] == 'Marin') {
+        col = Colors.pink;
       }
 
       children.add(new Text(
