@@ -58,22 +58,22 @@ class _EventListState extends State<EventList> {
               true) {
             if (events.contains(event) == false) {
               events.add(event);
-              if (cals.name == type + '-SF') {
+              if (cals.name.contains('SF')) {
                 color_list.add(kPrimaryLightColor);
               }
-              if (cals.name == type + '-East Bay') {
+              if (cals.name.contains('East Bay')) {
                 color_list.add(Colors.amber);
               }
-              if (cals.name == type + '-South Bay') {
+              if (cals.name.contains('South Bay')) {
                 color_list.add(Colors.deepPurpleAccent);
               }
-              if (cals.name == type + '-Peninsula') {
+              if (cals.name.contains('Peninsula')) {
                 color_list.add(Colors.red);
               }
-              if (cals.name == type + '-LA') {
+              if (cals.name.contains('LA')) {
                 color_list.add(Colors.orangeAccent);
               }
-              if (cals.name == type + '-Marin') {
+              if (cals.name.contains('Marin')) {
                 color_list.add(Colors.pink);
               }
             }

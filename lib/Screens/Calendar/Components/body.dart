@@ -132,6 +132,126 @@ class _CalendarBodyState extends State<CalendarBody> {
           apis['Marin-DOW'] =
               'https://www.googleapis.com/calendar/v3/calendars/1f1pdjh8rdsi4ccgus8qhtniao@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
         }
+        if (loc == 'SF' && type == 'Beauty') {
+          apis['SF-B'] =
+          'https://www.googleapis.com/calendar/v3/calendars/pj91tsbmctbuk395p15llvcn34@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'East Bay' && type == 'Beauty') {
+          apis['East Bay-B'] =
+          'https://www.googleapis.com/calendar/v3/calendars/vmiprjv5i5qukvbp1pn8cvmn8g@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'South Bay'  && type == 'Beauty') {
+          apis['South Bay-B'] =
+          'https://www.googleapis.com/calendar/v3/calendars/ju4ilmj9cj9omtfanh5sp3j1u4@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'Peninsula' && type == 'Beauty') {
+          apis['Peninsula-B'] =
+          'https://www.googleapis.com/calendar/v3/calendars/5ksb6c2otl837pd96jqgucqggc@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'LA'  && type == 'Beauty') {
+          apis['LA-B'] =
+          'https://www.googleapis.com/calendar/v3/calendars/jg5b0j4rdqona4s3r6l0sjq02g@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'Marin'  && type == 'Beauty') {
+          apis['Marin-B'] =
+          'https://www.googleapis.com/calendar/v3/calendars/h71236au321ogc5v5uh023rq1o@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'SF' && type == 'Casework') {
+          apis['SF-CW'] =
+          'https://www.googleapis.com/calendar/v3/calendars/58anp4lmijosl0a2277mh7k5hs@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'East Bay' && type == 'Casework') {
+          apis['East Bay-CW'] =
+          'https://www.googleapis.com/calendar/v3/calendars/rhcgkobu2nteadc2qq1gof4pik@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'South Bay' && type == 'Casework') {
+          apis['South Bay-CW'] =
+          'https://www.googleapis.com/calendar/v3/calendars/squ26o8occ0m5704erv9lq9m4o@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'Peninsula' && type == 'Casework') {
+          apis['Peninsula-CW'] =
+          'https://www.googleapis.com/calendar/v3/calendars/f10nh977rn38nf36fanu3j44ck@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'LA' && type == 'Casework') {
+          apis['LA-CW'] =
+          'https://www.googleapis.com/calendar/v3/calendars/a3uq0g1khhmniadmkllktnq05g@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'Marin' && type == 'Casework') {
+          apis['Marin-CW'] =
+          'https://www.googleapis.com/calendar/v3/calendars/p8dk4sla9ck1phn8dn2t0k1pjk@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'SF' && type == 'Education') {
+          apis['SF-Edu'] =
+          'https://www.googleapis.com/calendar/v3/calendars/oh9js5h72kmckifvfssmtqifks@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'East Bay' && type == 'Education') {
+          apis['East Bay-Edu'] =
+          'https://www.googleapis.com/calendar/v3/calendars/gc6dohpkvj46n5rk46knvj3db8@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'South Bay' && type == 'Education') {
+          apis['South Bay-Edu'] =
+          'https://www.googleapis.com/calendar/v3/calendars/sdg0qu3hl65hsv5jisqm26jirk@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'Peninsula' && type == 'Education') {
+          apis['Peninsula-Edu'] =
+          'https://www.googleapis.com/calendar/v3/calendars/l1mujfljoeotcvicg03bv5cnt4@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'LA' && type == 'Education') {
+          apis['LA-Edu'] =
+          'https://www.googleapis.com/calendar/v3/calendars/0gi1b8ab2n2absjvi7lan73us0@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'Marin' && type == 'Education') {
+          apis['Marin-Edu'] =
+          'https://www.googleapis.com/calendar/v3/calendars/nvrdg2lfipapcjdocgcvr9j1v4@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'SF' && type == 'Medical') {
+          apis['SF-med'] =
+          'https://www.googleapis.com/calendar/v3/calendars/kjsc3ndkm2gd4l9nengd6pmh4o@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'East Bay' && type == 'Medical') {
+          apis['East Bay-med'] =
+          'https://www.googleapis.com/calendar/v3/calendars/bfvluerpp3rs1undkpsmvpd7a8@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'South Bay' && type == 'Medical') {
+          apis['South Bay-med'] =
+          'https://www.googleapis.com/calendar/v3/calendars/0jnr1j69mj9v3fjm5hdbnf9hac@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'Peninsula' && type == 'Medical') {
+          apis['Peninsula-med'] =
+          'https://www.googleapis.com/calendar/v3/calendars/telnat3ibc2mqadj59q6rmpbh4@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'LA' && type == 'Medical') {
+          apis['LA-med'] =
+          'https://www.googleapis.com/calendar/v3/calendars/cvvdu84o0uoaltqlcion6peek4@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'Marin' && type == 'Medical') {
+          apis['Marin-med'] =
+          'https://www.googleapis.com/calendar/v3/calendars/0lt7hl7gejd689kkfvn9geaeb0@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'SF' && type == 'Other') {
+          apis['SF'] =
+          'https://www.googleapis.com/calendar/v3/calendars/a0p8g2o53t8ikm6enon99icu00@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'East Bay' && type == 'Other') {
+          apis['East Bay'] =
+          'https://www.googleapis.com/calendar/v3/calendars/78v6595d0rfi586enu45r6m8c0@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'South Bay' && type == 'Other') {
+          apis['South Bay'] =
+          'https://www.googleapis.com/calendar/v3/calendars/f080m7rsrmoodrafv4r158rmk0@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'Peninsula' && type == 'Other') {
+          apis['Peninsula'] =
+          'https://www.googleapis.com/calendar/v3/calendars/rpfemitfhepvpprqf0a24ej1t0@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'LA' && type == 'Other') {
+          apis['LA'] =
+          'https://www.googleapis.com/calendar/v3/calendars/3l9epuqibma5ecc73qi18oeigg@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
+        if (loc == 'Marin' && type == 'Other') {
+          apis['Marin'] =
+          'https://www.googleapis.com/calendar/v3/calendars/jq2djstfuc1gmb5d69t6dbdu3c@group.calendar.google.com/events?key=AIzaSyDSHlQAm5r_ePot45JDg3TFDbKSU3evQmY';
+        }
       }
     }
   }
