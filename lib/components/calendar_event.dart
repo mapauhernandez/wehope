@@ -8,6 +8,9 @@ class Event {
   final weekday;
   final recurrence;
   final endDate;
+  final cancelled;
+  final code;
+  final startDate;
 
   const Event({
     required this.name,
@@ -19,6 +22,9 @@ class Event {
     required this.weekday,
     required this.recurrence,
     required this.endDate,
+    required this.cancelled,
+    required this.code,
+    required this.startDate,
   });
 
   factory Event.fromJson(Map<String, dynamic> data) {
@@ -34,7 +40,7 @@ class Event {
           : "No Description found";
       final updated = DateTime.parse(data['updated']);
       final unformatted = data['start']['dateTime'];
-      String startDate = '';
+      String startDateD = '';
       int i = 0;
       final recurrence =
       data['recurrence'] != null ? data['recurrence'][0] as String : "SINGLE";
@@ -44,7 +50,7 @@ class Event {
       var endTime;
 
       while (unformatted[i] != 'T') {
-        startDate += unformatted[i];
+        startDateD += unformatted[i];
         i++;
       }
       i++;
@@ -65,14 +71,14 @@ class Event {
         endDateT += unformattedend[j];
         j++;
       }
-      endDate = DateTime.parse(endDateT);
       j++;
       String endTimeU = '';
       while (unformattedend[j] != 'Z' && unformattedend[j] != '-') {
         endTimeU += unformattedend[j];
         j++;
       }
-      startTime = DateTime.parse(startDate + ' ' + startTimeU);
+      var startDate = DateTime.parse(startDateD);
+      startTime = DateTime.parse(startDateD + ' ' + startTimeU);
       endTime = DateTime.parse(endDateT + ' ' + endTimeU);
 
       if (weirdTime) {
@@ -127,6 +133,7 @@ class Event {
       }
 
       String test = "";
+      endDate = DateTime(2030);
       if (recurrence != null) {
         if (recurrence.contains("UNTIL")) {
           int k = 0;
@@ -158,19 +165,25 @@ class Event {
         weekday: weekday,
         recurrence: recurrence,
         endDate: endDate,
+        cancelled: false,
+        code: data['id'] == null ? "NOID" : data['id'],
+        startDate: startDate,
       );
     }
     else {
       return Event(
-        name: "Test Event",
-        description: "Just a test event",
+        name: "Cancelled event",
+        description: "This event was cancelled for this date",
         updated: DateTime(2030),
         startTime: DateTime(2030),
         endTime: DateTime(2030),
+        startDate: DateTime(2030),
         location: "873 Grove St",
         weekday: 1,
         recurrence: "SINGLE",
         endDate: DateTime(2030),
+        cancelled: true,
+        code: data['recurringEventId'],
       );
 
     }
@@ -186,6 +199,7 @@ class Event {
         'location': location,
         'weekday': weekday,
         'endDate': endDate,
+        'code':  code,
       };
     }
 }

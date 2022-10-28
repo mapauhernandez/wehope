@@ -390,9 +390,7 @@ class _CalendarBodyState extends State<CalendarBody> {
                 ],
               );
             } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const Text("Loading");
             }
           },
         )

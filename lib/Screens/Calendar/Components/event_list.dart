@@ -31,32 +31,45 @@ class EventList extends StatefulWidget {
 }
 
 class _EventListState extends State<EventList> {
-  bool calculateDifference(
-      DateTime date, int weekday, String recurrence, DateTime endDate) {
+  bool calculateDifference(DateTime date, int weekday, String recurrence, DateTime endDate, DateTime startDate) {
     DateTime now = widget.day;
     bool expired = false;
+    bool early = false;
 
-    DateTime _formatToday =
-        DateTime(widget.day.year, widget.day.month, widget.day.day);
+    DateTime _formatToday = DateTime(widget.day.year, widget.day.month, widget.day.day);
 
-    if (endDate.compareTo(_formatToday) < 0) {
+    if(endDate.compareTo(_formatToday) < 0 ){
       expired = true;
     }
+
+    if(startDate.compareTo(_formatToday) > 0 ){
+      early = true;
+    }
     var ans = now.weekday == weekday;
-    return (ans & !expired);
+    return (ans & !expired & !early);
   }
 
   Widget build(BuildContext context) {
     List<Event> events = [];
     List<Color> color_list = [];
     int i = 0;
+    List<String> cancelled_IDs = [];
+    for (var cals in widget.calendars) {
+      for (var event in cals.events) {
+        if (event.cancelled == true) {
+          cancelled_IDs.add(event.code);
+        }
+      }
+    }
     for (var cals in widget.calendars) {
       for (String type in widget.eventType) {
         for (var event in cals.events) {
           if (calculateDifference(event.startTime, event.weekday,
-                  event.recurrence, event.endDate) ==
-              true) {
-            if (events.contains(event) == false) {
+                      event.recurrence, event.endDate, event.startDate) ==
+                  true &&
+              event.startTime != event.endTime) {
+            if (events.contains(event) == false &&
+                !cancelled_IDs.contains(event.code)) {
               events.add(event);
               if (cals.name.contains('SF')) {
                 color_list.add(kPrimaryLightColor);
